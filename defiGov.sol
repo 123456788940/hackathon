@@ -10,16 +10,12 @@ contract defineGovToken {
         _;
     }
 
-
-    ERC20 public governanceToken;
     struct Voting {
-        uint  votingId;
+        uint votingId;
         bool votingPowerGiven;
         uint voteValue;
         bool voted;
     }
-    uint public members;
-    uint public votingPowerCounter;
 
     struct addAsMember{
        uint contribution;
@@ -27,10 +23,14 @@ contract defineGovToken {
        bool memberAdded;
     }
 
+    ERC20 public governanceToken;
+    address[] public members;
+    uint public votingPowerCounter;
+
     mapping(address => addAsMember) public Member;
     mapping(uint => Voting) public VotingPoweer;
 
-    constructor(address tokenAddress) {
+    constructor(address tokenAddress) public {
         governanceToken = ERC20(tokenAddress);
         votingPowerCounter = 0;
         owner = msg.sender;
@@ -45,7 +45,7 @@ contract defineGovToken {
             tenureWanted: _tenureWanted,
             memberAdded: true
         });
-        members++;
+        members.push(msg.sender);
         governanceToken.transferFrom(msg.sender, address(this), _contribution);
     }
 
@@ -56,7 +56,7 @@ contract defineGovToken {
         require(_voteValue == 1, "vote value has to be 1 for all members");
 
         VotingPoweer[votingPowerCounter] = Voting ({
-          votingId:  _votingId,
+          votingId: _votingId,
           voteValue: _voteValue,
           votingPowerGiven: true,
             voted: false
