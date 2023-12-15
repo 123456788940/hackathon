@@ -1,9 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8;
 
-
 import "./ERC20.sol";
-
 
 // Import UniswapV2 interfaces
 import "@uniswap/v2-core/contracts/interfaces/IUniswapV2Factory.sol";
