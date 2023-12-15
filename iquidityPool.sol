@@ -19,7 +19,7 @@ contract ERC20Contract is ERC20 {
    }
 
    IUniswapV2Router02 public uniswapRouter;
-   address public uiniswapPair;
+   address public uniswapPair;
     
 
    constructor(string memory _name, string memory _symbol) ERC20(_name, _symbol) {
@@ -29,7 +29,7 @@ contract ERC20Contract is ERC20 {
      );
          uniswapRouter = _uniswapRouter;
 
-         uiniswapPair =  IUniswapV2Factory(_uniswapRouter.factory()).createPair(
+         uniswapPair =  IUniswapV2Factory(_uniswapRouter.factory()).createPair(
             address(this),
             _uniswapRouter.WETH()
 
@@ -60,11 +60,11 @@ contract ERC20Contract is ERC20 {
 
    }
 
-   function swapTokens(uint amountIn, uint amountOut) external onlyOwner {
+   function swapTokens(uint amountIn, uint amountOutmin) external onlyOwner {
     _approve(msg.sender, address(uniswapRouter), amountIn);
     uniswapRouter.swapExactTokensForTokens(
         amountIn,
-        amountOut,
+        amountOutmin,
         getPath(),
         address(this),
           block.timestamp + 3600
@@ -91,4 +91,3 @@ contract ERC20Contract is ERC20 {
 
 
 } 
-
