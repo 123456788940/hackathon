@@ -77,9 +77,9 @@ modifier onlyOwner() {
 
 
     function quorumRequirement(uint votesRequired) public onlyOwner {
-         require(Member[msg.sender].memberAdded, "Already added");
-           require(VotingPoweer[votingPowerCounter].votingPowerGiven, "already voted");
-           require(VotingPoweer[votingPowerCounter].voted, "Already voted");
+         require(Member[msg.sender].memberAdded, "echo Already added");
+           require(VotingPoweer[votingPowerCounter].votingPowerGiven, "echo already voted");
+           require(VotingPoweer[votingPowerCounter].voted, "echo Already voted");
         require(votesRequired * 100 >= 1 * members, "quarum not met");
         VotingPoweer[votingPowerCounter].voted = true;
     }
