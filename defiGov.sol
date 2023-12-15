@@ -5,10 +5,6 @@ import "./ERC20.sol";
 
 contract defineGovToken {
     address public owner;
-    modifier onlyOwner() {
-        require(msg.sender == owner, "only owner has access");
-        _;
-    }
 
     struct Voting {
         uint votingId;
@@ -36,6 +32,11 @@ contract defineGovToken {
         owner = msg.sender;
     }
 
+    modifier onlyOwner() {
+        require(msg.sender == owner, "only owner has access");
+        _;
+    }
+
     function AddMember(uint _contribution, uint _tenureWanted) public onlyOwner{
         require(!Member[msg.sender].memberAdded, "Already added");
         require(_contribution >= 100, "amount must be equal or greater than 100");
@@ -49,9 +50,8 @@ contract defineGovToken {
         governanceToken.transferFrom(msg.sender, address(this), _contribution);
     }
 
-
     function votingPoweer(uint _votingId, uint _voteValue) public onlyOwner {
-        require(Member[msg.sender].memberAdded, "Already added");
+        require(!Member[msg.sender].memberAdded, "Already added");
         require(!VotingPoweer[votingPowerCounter].votingPowerGiven, "already voted");
         require(_voteValue == 1, "vote value has to be 1 for all members");
 
@@ -59,13 +59,12 @@ contract defineGovToken {
           votingId: _votingId,
           voteValue: _voteValue,
           votingPowerGiven: true,
-            voted: false
+          voted: false
         });
     }
 
-
-    function quorumRequirement(uint votesRequired) public onlyOwner {
-        require(Member[msg.sender].memberAdded, "echo Already added");
+    function quorumRequireent(uint votesRequired) public onlyOwner {
+        require(!Member[msg.sender].memberAdded, "echo Already added");
         require(VotingPoweer[votingPowerCounter].votingPowerGiven, "echo already voted");
         require(VotingPoweer[votingPowerCounter].voted, "echo Already voted");
         require(votesRequired * 100 >= 1 * members, "quarum not met");
