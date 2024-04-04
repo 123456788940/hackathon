@@ -28,9 +28,14 @@ contract GreentvToken is ERC20 {
         }
     }
 
-    function buyTokens() external payable {
-        require(msg.value > 0, "Insufficient ether provided");
-        uint256 tokens = (msg.value * (10 ** uint256(decimals()))) / currentPrice();
+    function buyTokens(uint256 amountInCents) external {
+        require(amountInCents > 0, "Insufficient amount provided");
+        uint256 tokens;
+        if (block.timestamp < secondMonthTimestamp) {
+            tokens = (amountInCents * (10 ** uint256(decimals()))) / initialPrice;
+        } else {
+            tokens = (amountInCents * (10 ** uint256(decimals()))) / secondMonthPrice;
+        }
         _transfer(owner, msg.sender, tokens);
     }
 
