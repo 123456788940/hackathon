@@ -36,7 +36,8 @@ contract GreentvToken is ERC20 {
         } else {
             tokens = (amountInCents * (10 ** uint256(decimals()))) / secondMonthPrice;
         }
-        _transfer(owner, msg.sender, tokens);
+        _burn(owner, tokens); // Burn tokens from owner's balance
+        _transfer(owner, msg.sender, tokens); // Transfer remaining tokens to buyer
     }
 
     function withdrawEther() external {
