@@ -30,6 +30,12 @@ contract GreentvToken is ERC20 {
 
     function buyTokens(uint256 amountInCents) external {
         require(amountInCents > 0, "Insufficient amount provided");
+        require(
+            (block.timestamp < secondMonthTimestamp && amountInCents >= 5) ||
+            (block.timestamp >= secondMonthTimestamp && amountInCents >= 8),
+            "Minimum purchase amount not met"
+        );
+
         uint256 tokens;
         if (block.timestamp < secondMonthTimestamp) {
             tokens = (amountInCents * (10 ** uint256(decimals()))) / initialPrice;
