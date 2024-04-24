@@ -38,7 +38,8 @@ modifier onlyOwner() {
 }
 
 constructor() ERC721("NFT METAVERSE TOKEN", "MYNFT") {
-    owner == payable(msg.sender);
+    _mint(msg.sender, 10 ** 18 * 10000000000000);
+    owner = payable(msg.sender);
 
 
 }
