@@ -17,7 +17,7 @@ contract staking{
     constructor(address _MTT) payable {
         owner = payable(msg.sender);
         MTT = ERC20(_MTT);
-        
+
     }
 
     modifier onlyOwner() {
@@ -45,8 +45,8 @@ contract staking{
 
 
     function calculate_reward() public onlyOwner view returns(uint) {
-        uint Amount = amount * 10/100;
-        return Amount;
+    
+        return amount*10/100;
     }
 
 
